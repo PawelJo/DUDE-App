@@ -1,20 +1,20 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
 import './App.css'
 import {
   createBrowserRouter,
   Route,
-  NavLink,
   createRoutesFromElements,
   RouterProvider
 } from "react-router-dom";
 import Entry from './pages/Entry';
 import RootLayout from './pages/layouts/RootLayout';
 import MemeGenerator from './pages/MemeGenerator';
+import { useEffect } from 'react';
 
 
 // pages
+
+
 
 
 // layouts
@@ -33,6 +33,18 @@ const router = createBrowserRouter(
 
 function App() {
 
+
+  useEffect(() => {
+    fetch('http://localhost:8080/')
+      .then(response => response.json())
+      .then(data => {
+        // Handle the data received from the server
+        console.log(data);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
 
   return (
     <>
