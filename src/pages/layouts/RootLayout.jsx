@@ -9,6 +9,7 @@ export default function RootLayout() {
 					<NavLink to="/">Home</NavLink>
 					<NavLink to="/memegenerator">Meme Generator</NavLink>
 					<NavLink to="/entry">Entry</NavLink>
+					<NavLink to="/doener">Döner</NavLink>
 
 				</nav>
 			</header>

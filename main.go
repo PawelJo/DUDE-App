@@ -53,12 +53,25 @@ func enableCors(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Headers", "Content-Type")
 }
 
-func get(w http.ResponseWriter, r *http.Request) {
+func getVendors(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	fmt.Println("Lemme get that Data for you real quick")
-	rows, err := db.Query("SELECT * FROM Vendors")
+
+	params := r.URL.Query()
+
+	category := params.Get("category")
+
+	query := "SELECT * FROM Vendors"
+
+	if category != "" {
+		query += fmt.Sprintf(" WHERE category = %s", category)
+		fmt.Println(category)
+		fmt.Println(query)
+	}
+
+	rows, err := db.Query(query)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -94,7 +107,7 @@ func get(w http.ResponseWriter, r *http.Request) {
 func main() {
 
 	r := mux.NewRouter()
-	r.HandleFunc("/", get).Methods(http.MethodGet)
+	r.HandleFunc("/vendors", getVendors).Methods(http.MethodGet)
 	r.HandleFunc("/", options).Methods(http.MethodOptions)
 	log.Fatal(http.ListenAndServe(":8080", r))
 }

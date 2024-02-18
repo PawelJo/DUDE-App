@@ -9,7 +9,8 @@ import {
 import Entry from './pages/Entry';
 import RootLayout from './pages/layouts/RootLayout';
 import MemeGenerator from './pages/MemeGenerator';
-import { useEffect } from 'react';
+import Doener from './pages/Doener';
+
 
 
 // pages
@@ -20,12 +21,14 @@ import { useEffect } from 'react';
 // layouts
 
 
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
 
       <Route path="/memegenerator" element={<MemeGenerator />} />
       <Route path="/entry" element={<Entry />} />
+      <Route path="/doener" element={<Doener />} />
 
     </Route>
   )
@@ -34,21 +37,13 @@ const router = createBrowserRouter(
 function App() {
 
 
-  useEffect(() => {
-    fetch('http://localhost:8080/')
-      .then(response => response.json())
-      .then(data => {
-        // Handle the data received from the server
-        console.log(data);
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
-  }, []);
+
+
 
   return (
     <>
       <RouterProvider router={router} />
+
 
     </>
   )
