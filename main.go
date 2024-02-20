@@ -85,6 +85,7 @@ func getVendors(w http.ResponseWriter, r *http.Request) {
 		err := rows.Scan(&d.ID, &d.Category, &d.VendorName, &d.Rating, &d.Pros, &d.Cons, &d.GmapsLink, &d.DateCreated)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
+			fmt.Println("we need the whole struct")
 			return
 		}
 		dataSlice = append(dataSlice, d)

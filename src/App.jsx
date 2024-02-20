@@ -25,26 +25,18 @@ import Doener from './pages/Doener';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
-
       <Route path="/memegenerator" element={<MemeGenerator />} />
       <Route path="/entry" element={<Entry />} />
       <Route path="/doener" element={<Doener />} />
-
     </Route>
   )
 )
 
 function App() {
 
-
-
-
-
   return (
     <>
       <RouterProvider router={router} />
-
-
     </>
   )
 }
