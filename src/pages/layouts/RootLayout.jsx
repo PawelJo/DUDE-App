@@ -1,21 +1,29 @@
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
+import BackButton from './BackButton'
 
-export default function RootLayout() {
+
+export default function RootLayout({ children }) {
+	const location = useLocation();
+	const isHomePage = location.pathname === '/';
 	return (
 		<div className="root-layout">
-			<header>
+			<header className={isHomePage && 'Headerklasse'}>
 				<nav>
-					<h1>Main Menu</h1>
-					<NavLink to="/">Home</NavLink>
-					<NavLink to="/memegenerator">Meme Generator</NavLink>
-					<NavLink to="/entry">Entry</NavLink>
-					<NavLink to="/doener">Döner</NavLink>
+
+					<NavLink to="/">
+						<img src="" alt="DUDE" />
+						<div>
+							D.U.D.E
+						</div>
+					</NavLink>
 
 				</nav>
 			</header>
 
 			<main>
-				<Outlet />
+				{!isHomePage && <BackButton />}
+				{children}
 			</main>
 		</div>
 	)

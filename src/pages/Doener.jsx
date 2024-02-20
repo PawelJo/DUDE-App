@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import RootLayout from './layouts/RootLayout';
 
 export default function Doener() {
 
@@ -19,7 +20,7 @@ export default function Doener() {
 			});
 	}, []);
 	return (
-		<>
+		<RootLayout>
 			<div>Döner</div>
 
 
@@ -56,6 +57,6 @@ export default function Doener() {
 					</tbody>
 				</table>
 			</div>
-		</>
+		</RootLayout>
 	)
 }

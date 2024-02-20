@@ -7,7 +7,7 @@ export default function LayoutWrapper() {
 	const isHomePage = location.pathname === '/';
 	return (
 		<>
-			{isHomePage ? <RootLayout /> : null}
+			{isHomePage ? <RootLayout /> : <RootLayout />}
 		</>
 	)
 }

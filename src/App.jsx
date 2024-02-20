@@ -4,12 +4,12 @@ import {
   createBrowserRouter,
   Route,
   createRoutesFromElements,
-  RouterProvider
+  RouterProvider,
 } from "react-router-dom";
 import Entry from './pages/Entry';
-import RootLayout from './pages/layouts/RootLayout';
 import MemeGenerator from './pages/MemeGenerator';
 import Doener from './pages/Doener';
+import Homepage from './pages/Homepage';
 
 
 
@@ -24,11 +24,14 @@ import Doener from './pages/Doener';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<RootLayout />}>
+    <>
+      <Route path="/" element={<Homepage />}>
+      </Route>
+
       <Route path="/memegenerator" element={<MemeGenerator />} />
       <Route path="/entry" element={<Entry />} />
       <Route path="/doener" element={<Doener />} />
-    </Route>
+    </>
   )
 )
 
@@ -36,7 +39,9 @@ function App() {
 
   return (
     <>
+
       <RouterProvider router={router} />
+
     </>
   )
 }
