@@ -9,6 +9,7 @@ import {
 import Entry from './pages/Entry';
 import MemeGenerator from './pages/MemeGenerator';
 import Doener from './pages/Doener';
+import Spaeti from './pages/Spaeti'
 import Homepage from './pages/Homepage';
 
 
@@ -30,6 +31,7 @@ const router = createBrowserRouter(
 
       <Route path="/memegenerator" element={<MemeGenerator />} />
       <Route path="/entry" element={<Entry />} />
+      <Route path="/spaeti" element={<Spaeti />} />
       <Route path="/doener" element={<Doener />} />
     </>
   )

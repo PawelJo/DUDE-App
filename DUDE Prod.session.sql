@@ -65,4 +65,34 @@ ORDER BY rating DESC;
 DROP TABLE Vendors;
 -- @block
 DELETE FROM Vendors
-WHERE dateCreated IS NULL
+WHERE dateCreated IS NULL;
+-- @block
+CREATE TABLE Rules(
+	category VARCHAR(255) NOT NULL PRIMARY KEY,
+	ruleText TEXT
+);
+-- @block
+INSERT INTO Rules (category, ruleText)
+VALUES (
+		'Döner',
+		'- immer alles komplett nehmen  - wenn "Rambo" vorhanden, immer bisschen draufstreuen um Respekt zu gewinnen  - Ayran dazu nehmen, oder Uludag Gazos, wenn du auf Ghetto machen willst'
+	),
+	(
+		'Späti',
+		'- Kartenzahlung meist erst ab 10€ (wenn überhaupt)  - Wenn Sterni mehr als 1,20€ kostet bitte an den Admin wenden, damit der Laden rausgenommen werden kann  - akzeptable Begrüßungen: "Moin", oder "Jo, was geht chef"'
+	);
+-- @block
+SELECT *
+FROM Rules;
+-- @block
+SELECT V.*,
+	R.ruleText
+FROM Vendors V
+	JOIN Rules R ON V.category = R.category
+WHERE V.category = 'Döner';
+-- @block
+SELECT V.*,
+	R.ruleText
+FROM Vendors V
+	JOIN Rules R ON V.category = R.category
+WHERE V.category = "Späti";

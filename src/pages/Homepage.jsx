@@ -3,10 +3,11 @@ import { NavLink } from 'react-router-dom'
 
 export default function Homepage() {
 	return (
-		<RootLayout>
-			<NavLink to="/memegenerator">Meme Generator</NavLink>
-			<NavLink to="/entry">Entry</NavLink>
-			<NavLink to="/doener">Döner</NavLink>
+		<RootLayout className='root-layout'>
+			<NavLink className='main-nav-link' to="/memegenerator">Meme Generator</NavLink>
+			<NavLink className='main-nav-link' to="/entry">Entry</NavLink>
+			<NavLink className='main-nav-link' to="/doener">Döner</NavLink>
+			<NavLink className='main-nav-link' to="/spaeti">Späti</NavLink>
 		</RootLayout>
 	)
 }

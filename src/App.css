@@ -181,7 +181,6 @@ header nav {
   gap: 32px;
   justify-content: end;
   flex-wrap: wrap;
-
   margin: 0 auto;
 }
 
@@ -218,4 +217,28 @@ main {
 
 .description-paragraph {
   font-size: 28px;
+}
+
+.root-layout {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.main-nav-link {
+  display: flex;
+  width: 100%;
+  margin: 20px;
+}
+
+.rule-entry {
+  flex-wrap: wrap;
+  font-size: 20px;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.rules-container {
+  display: flex;
+  flex-wrap: wrap;
 }

@@ -1,31 +1,45 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import RootLayout from './layouts/RootLayout';
+import VendorGetter from './utility/VendorGetter';
+import VendorList from './layouts/VendorList';
 
 export default function Doener() {
 
 
-	const [data, setData] = useState([]);
+	const slug = '"Döner"'
+	const [fetchedData, setFetchedData] = useState({
+		data: [],
+		loading: true,
+		error: null,
+	})
 
-	useEffect(() => {
-		fetch('http://localhost:8080/vendors?category="D%C3%B6ner"')
-			.then(response => response.json())
-			.then(data => {
-				// Handle the data received from the server
-				console.log(data);
-				setData(data)
-			})
-			.catch(error => {
-				console.error('Error fetching data:', error);
+	/* 	const [data, setData] = useState([]); */
+	/* 
+		useEffect(() => {
+			fetch('http://localhost:8080/vendors?category="D%C3%B6ner"')
+				.then(response => response.json())
+				.then(data => {
+					// Handle the data received from the server
+					console.log(data);
+					setData(data)
+	
+				})
+				.catch(error => {
+					console.error('Error fetching data:', error);
+	
+				});
+		}, []); */
 
-			});
-	}, []);
 	return (
 		<RootLayout>
-			<div>Döner</div>
+			<h1>Döner</h1>
 
+			<VendorGetter slug={slug} onDataFetched={setFetchedData} />
+			<VendorList data={fetchedData.data} loading={fetchedData.loading} />
 
-			<div>
-				<h1>Your Data</h1>
+			{/* {data.length > 0 ? (<div>
+				<h1>RULES</h1>
+				<h2>{data[0].ruleText}</h2>
 				<table>
 					<thead>
 						<tr>
@@ -56,7 +70,9 @@ export default function Doener() {
 						))}
 					</tbody>
 				</table>
-			</div>
+			</div>) : (
+				<h2>Yeah yeah we are loading, chill the fuck out </h2>
+			)} */}
 		</RootLayout>
 	)
 }

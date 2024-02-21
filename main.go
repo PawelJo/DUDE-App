@@ -38,6 +38,7 @@ type Vendor struct {
 	Cons        string `json:"cons"`
 	GmapsLink   string `json:"gmapsLink"`
 	DateCreated string `json:"dateCreated"`
+	RuleText    string `json:"ruleText"`
 }
 
 func options(w http.ResponseWriter, r *http.Request) {
@@ -63,17 +64,18 @@ func getVendors(w http.ResponseWriter, r *http.Request) {
 
 	category := params.Get("category")
 
-	query := "SELECT * FROM Vendors"
+	query := "SELECT V.*, R.ruleText FROM Vendors V JOIN Rules R ON V.category = R.category"
 
 	if category != "" {
-		query += fmt.Sprintf(" WHERE category = %s", category)
+		query += fmt.Sprintf(" WHERE V.category = %s", category)
 		fmt.Println(category)
-		fmt.Println(query)
 	}
+	fmt.Println(query)
 
 	rows, err := db.Query(query)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		fmt.Println("Here we are fucked")
 		return
 	}
 	defer rows.Close()
@@ -82,7 +84,7 @@ func getVendors(w http.ResponseWriter, r *http.Request) {
 
 	for rows.Next() {
 		var d Vendor
-		err := rows.Scan(&d.ID, &d.Category, &d.VendorName, &d.Rating, &d.Pros, &d.Cons, &d.GmapsLink, &d.DateCreated)
+		err := rows.Scan(&d.ID, &d.Category, &d.VendorName, &d.Rating, &d.Pros, &d.Cons, &d.GmapsLink, &d.DateCreated, &d.RuleText)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			fmt.Println("we need the whole struct")
@@ -100,7 +102,7 @@ func getVendors(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-
+	/* fmt.Println(jsonData) */
 	w.Write(jsonData)
 
 }

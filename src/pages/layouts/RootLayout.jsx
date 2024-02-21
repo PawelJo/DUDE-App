@@ -6,9 +6,16 @@ import BackButton from './BackButton'
 export default function RootLayout({ children }) {
 	const location = useLocation();
 	const isHomePage = location.pathname === '/';
+
+
+
+
+
+
+
 	return (
 		<div className="root-layout">
-			<header className={isHomePage && 'Headerklasse'}>
+			<header className={isHomePage ? 'Headerklasse' : undefined}>
 				<nav>
 
 					<NavLink to="/">
