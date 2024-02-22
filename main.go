@@ -31,6 +31,7 @@ func init() {
 
 type Vendor struct {
 	ID          int    `json:"id"`
+	City        string `json:"city"`
 	Category    string `json:"category"`
 	VendorName  string `json:"name"`
 	Rating      int    `json:"rating"`
@@ -84,7 +85,7 @@ func getVendors(w http.ResponseWriter, r *http.Request) {
 
 	for rows.Next() {
 		var d Vendor
-		err := rows.Scan(&d.ID, &d.Category, &d.VendorName, &d.Rating, &d.Pros, &d.Cons, &d.GmapsLink, &d.DateCreated, &d.RuleText)
+		err := rows.Scan(&d.ID, &d.City, &d.Category, &d.VendorName, &d.Rating, &d.Pros, &d.Cons, &d.GmapsLink, &d.DateCreated, &d.RuleText)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			fmt.Println("we need the whole struct")

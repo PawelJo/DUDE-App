@@ -1,6 +1,7 @@
 -- @block
 CREATE TABLE Vendors(
 	id INT PRIMARY KEY AUTO_INCREMENT,
+	city VARCHAR(255) NOT NULL,
 	category VARCHAR(255) NOT NULL,
 	vendorName VARCHAR(255) NOT NULL,
 	rating INT,
@@ -11,6 +12,7 @@ CREATE TABLE Vendors(
 );
 -- @block
 INSERT INTO Vendors (
+		city,
 		category,
 		vendorName,
 		rating,
@@ -20,6 +22,7 @@ INSERT INTO Vendors (
 		dateCreated
 	)
 VALUES (
+		'Berlin',
 		'Döner',
 		'First Kebap',
 		7,
@@ -29,6 +32,7 @@ VALUES (
 		'2024-02-11'
 	),
 	(
+		'Berlin',
 		'Döner',
 		'Pia Bistro',
 		6,
@@ -39,6 +43,7 @@ VALUES (
 	);
 -- @block
 INSERT INTO Vendors (
+		city,
 		category,
 		vendorName,
 		rating,
@@ -48,6 +53,38 @@ INSERT INTO Vendors (
 		dateCreated
 	)
 VALUES (
+		'Wien',
+		'Döner',
+		'Berliner Döner Wien',
+		8,
+		'Für Wien ganz OK Preise, süße Bude in Fancy Area, nimmt Karte',
+		'Schmeckt nicht wirklich wie in Berlin, Verkäufer zu nett',
+		'https://maps.app.goo.gl/6c6D8YbDqK8pAMfAA',
+		'2024-02-22'
+	),
+	(
+		'Wien',
+		'Döner',
+		'Dr. Döner',
+		9,
+		'Döner kostet 4,30€ (bruh), nimmt Karte,  direkt am Park',
+		'Name ist bissl cringe tbh',
+		'https://maps.app.goo.gl/dmYYWjQeVYQHfUeB7',
+		'2024-02-08'
+	);
+-- @block
+INSERT INTO Vendors (
+		city,
+		category,
+		vendorName,
+		rating,
+		pros,
+		cons,
+		GmapsLink,
+		dateCreated
+	)
+VALUES (
+		'Berlin',
 		'Späti',
 		'SODA all in one',
 		8,
@@ -59,7 +96,6 @@ VALUES (
 -- @block
 SELECT *
 FROM Vendors
-WHERE category = 'Späti'
 ORDER BY rating DESC;
 -- @block
 DROP TABLE Vendors;

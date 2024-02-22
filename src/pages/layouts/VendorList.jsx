@@ -1,3 +1,4 @@
+import CityList from "./CityList";
 
 const VendorList = ({ data, loading, error }) => {
 	if (loading) {
@@ -8,6 +9,10 @@ const VendorList = ({ data, loading, error }) => {
 		return <p>Error fetching data: {error.message}</p>;
 	}
 
+
+	const berlinVendors = []
+	const viennaVendors = []
+
 	const rawRuleText = data[0].ruleText
 	const splitRuleText = rawRuleText.split('  ')
 	const formattedRuleText = [];
@@ -17,31 +22,28 @@ const VendorList = ({ data, loading, error }) => {
 		formattedRuleText.push(<br key={i + 200} />)
 	}
 
+	data.map(item => {
+		if (item.city == "Berlin") {
+			berlinVendors.push(item)
+		}
+		else if (item.city == "Wien") {
+			viennaVendors.push(item)
+		}
+		else {
+			console.log("Couldn't match city")
+		}
+	})
+	console.log("berlin Vendors", berlinVendors)
+
+
+
 	return (
 		<>
-			<div className="rules-container">{formattedRuleText}</div>
-			<table>
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>Category</th>
-						<th>Vendor name</th>
-						<th>Rating</th>
-						{/* Add other table headers as needed */}
-					</tr>
-				</thead>
-				<tbody>
-					{data.map(item => (
-						<tr key={item.id}>
-							<td>{item.id}</td>
-							<td>{item.category}</td>
-							<td>{item.name}</td>
-							<td>{item.rating}</td>
-							{/* Add other table cells as needed */}
-						</tr>
-					))}
-				</tbody>
-			</table>
+			{formattedRuleText}
+			<CityList vendors={berlinVendors} city='Berlin' />
+			<CityList vendors={viennaVendors} city='Wien' />
+
+
 		</>
 	);
 };

@@ -18,10 +18,8 @@ export default function Doener() {
 	return (
 		<RootLayout>
 			<h1>Döner</h1>
-
 			<VendorGetter slug={slug} onDataFetched={setFetchedData} />
 			<VendorList data={fetchedData.data} loading={fetchedData.loading} />
-
 		</RootLayout>
 	)
 }
