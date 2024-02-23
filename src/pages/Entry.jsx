@@ -1,18 +1,58 @@
-import { useEffect } from "react"
-import { useLocation } from "react-router-dom"
+import { useEffect, useState } from "react"
+import fetchEntry from "./utility/fetchEntry";
+import RootLayout from "./layouts/RootLayout";
+import { useParams } from "react-router-dom";
 
 export default function Entry() {
 
 
+	const { id } = useParams()
+	const [fetchedData, setFetchedData] = useState({
+		data: [],
+		loading: true,
+		error: null,
+	})
 
 	useEffect(() => {
-		console.log('this is location: ', location)
-	}, [location])
+		fetchEntry(id, setFetchedData);
+	}, [id, setFetchedData]);
+
+	if (fetchedData.loading) {
+		return <div>Loading...</div>;
+	}
+
+	console.log(fetchedData)
+	console.log("fetchedData.data[0]: ", fetchedData.data[0].dateCreated)
 	return (
-		<>
-			<h1>Dönerkunde</h1>
-			<p className="title-card">Wie bestelle ich?</p>
-			<p className="description-paragraph">Immer alles komplett</p>
-		</>
+		<RootLayout>
+			<h1>Entry</h1>
+			<table>
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Category</th>
+						<th>Name</th>
+						<th>Pros</th>
+						<th>Cons</th>
+						<th>Rating</th>
+						<th>Gmapslink</th>
+					</tr>
+				</thead>
+				<tbody>
+					{fetchedData.data.map(entry => (
+						<tr key={entry.id}>
+							<td>{entry.id}</td>
+							<td>{entry.category}</td>
+							<td>{entry.name}</td>
+							<td>{entry.pros}</td>
+							<td>{entry.cons}</td>
+							<td>{entry.rating}</td>
+							<td><a target="_blank" rel="noopener noreferrer" href={entry.gmapslink}>Goto</a></td>
+						</tr>
+					))}
+				</tbody>
+			</table>
+
+		</RootLayout>
 	)
 }

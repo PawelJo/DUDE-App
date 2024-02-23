@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom"
+
 export default function CityList({ vendors, city }) {
 
 	console.log('Vendors in Citylist', vendors)
@@ -9,6 +11,7 @@ export default function CityList({ vendors, city }) {
 	return (
 		<div key={city}>
 			<h2>{`${city} Vendors`}</h2>
+
 			<table>
 				<thead>
 					<tr>
@@ -22,7 +25,7 @@ export default function CityList({ vendors, city }) {
 				<tbody>
 					{vendors.map((item) => (
 						<tr key={item.id}>
-							<td>{item.id}</td>
+							<NavLink to={`/entry/${item.id}`}><td> Go to Shop: {item.id}</td></NavLink>
 							<td>{item.category}</td>
 							<td>{item.name}</td>
 							<td>{item.rating}</td>

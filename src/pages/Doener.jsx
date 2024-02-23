@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import RootLayout from './layouts/RootLayout';
-import VendorGetter from './utility/VendorGetter';
 import VendorList from './layouts/VendorList';
+import fetchList from './utility/fetchList';
+import Entry from './Entry';
 
 export default function Doener() {
 
@@ -13,12 +14,13 @@ export default function Doener() {
 		error: null,
 	})
 
-
+	useEffect(() => {
+		fetchList(slug, setFetchedData);
+	}, [slug, setFetchedData]);
 
 	return (
 		<RootLayout>
 			<h1>Döner</h1>
-			<VendorGetter slug={slug} onDataFetched={setFetchedData} />
 			<VendorList data={fetchedData.data} loading={fetchedData.loading} />
 		</RootLayout>
 	)

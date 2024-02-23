@@ -55,7 +55,7 @@ func enableCors(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Headers", "Content-Type")
 }
 
-func getVendors(w http.ResponseWriter, r *http.Request) {
+func getVendorsList(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
@@ -108,10 +108,64 @@ func getVendors(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func getEntry(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	fmt.Println("Gettin' that entry for you")
+
+	params := r.URL.Query()
+
+	id := params.Get("id")
+
+	query := "SELECT V.* FROM Vendors V"
+
+	if id != "" {
+		query += fmt.Sprintf(" WHERE V.id = %s", id)
+		fmt.Println(id)
+	}
+	fmt.Println(query)
+
+	rows, err := db.Query(query)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		fmt.Println("Here we are fucked")
+		return
+	}
+	defer rows.Close()
+
+	var dataSlice []Vendor
+
+	for rows.Next() {
+		var d Vendor
+		err := rows.Scan(&d.ID, &d.City, &d.Category, &d.VendorName, &d.Rating, &d.Pros, &d.Cons, &d.GmapsLink, &d.DateCreated)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			fmt.Println("we need the whole struct")
+			return
+		}
+		dataSlice = append(dataSlice, d)
+	}
+
+	if err := rows.Err(); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	jsonData, err := json.Marshal(dataSlice)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	/* fmt.Println(jsonData) */
+	w.Write(jsonData)
+
+}
+
 func main() {
 
 	r := mux.NewRouter()
-	r.HandleFunc("/vendors", getVendors).Methods(http.MethodGet)
+	r.HandleFunc("/vendors", getVendorsList).Methods(http.MethodGet)
+	r.HandleFunc("/entry", getEntry).Methods(http.MethodGet)
 	r.HandleFunc("/", options).Methods(http.MethodOptions)
 	log.Fatal(http.ListenAndServe(":8080", r))
 }
