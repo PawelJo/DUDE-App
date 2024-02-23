@@ -242,3 +242,35 @@ main {
   display: flex;
   flex-wrap: wrap;
 }
+
+.city-name {
+  font-size: 28px;
+  margin: 20px;
+}
+
+.entry-nav-link {
+  text-decoration: none;
+  padding: 0px;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 20px;
+  width: 50%;
+  background-color: #bc4123;
+  margin: 10px;
+  padding: 5px;
+  display: block;
+  text-align: start;
+}
+
+.main-nav-link {
+  display: flex;
+  width: 100%;
+  margin: 20px;
+  background-color: #fff;
+  color: #000;
+  padding: 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 20px;
+  width: 50%;
+}

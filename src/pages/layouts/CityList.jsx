@@ -10,30 +10,17 @@ export default function CityList({ vendors, city }) {
 
 	return (
 		<div key={city}>
-			<h2>{`${city} Vendors`}</h2>
+			<h2 className="city-name">{`${city} Vendors`}</h2>
 
-			<table>
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>Category</th>
-						<th>Vendor name</th>
-						<th>Rating</th>
-						{/* Add other table headers as needed */}
-					</tr>
-				</thead>
-				<tbody>
-					{vendors.map((item) => (
-						<tr key={item.id}>
-							<NavLink to={`/entry/${item.id}`}><td> Go to Shop: {item.id}</td></NavLink>
-							<td>{item.category}</td>
-							<td>{item.name}</td>
-							<td>{item.rating}</td>
-							{/* Add other table cells as needed */}
-						</tr>
-					))}
-				</tbody>
-			</table>
-		</div>
-	)
+
+			{vendors.map((item) => (
+				<div key={item.id}>
+					<NavLink className={"entry-nav-link"} to={`/entry/${item.id}`}>{item.name}</NavLink>
+					<span key="rating">{item.rating}</span>
+
+				</div>
+			))}
+
+		</div>)
+
 }

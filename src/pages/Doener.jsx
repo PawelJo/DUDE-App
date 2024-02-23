@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import RootLayout from './layouts/RootLayout';
 import VendorList from './layouts/VendorList';
 import fetchList from './utility/fetchList';
-import Entry from './Entry';
+
 
 export default function Doener() {
 

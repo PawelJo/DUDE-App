@@ -25,7 +25,7 @@ export default function Entry() {
 	console.log("fetchedData.data[0]: ", fetchedData.data[0].dateCreated)
 	return (
 		<RootLayout>
-			<h1>Entry</h1>
+			<h1>{fetchedData.data[0].name}</h1>
 			<table>
 				<thead>
 					<tr>

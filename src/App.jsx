@@ -30,11 +30,11 @@ const router = createBrowserRouter(
       <Route path="/" element={<Homepage />}>
       </Route>
 
-      <Route path="/memegenerator" element={<MemeGenerator />} />
-      <Route path="/entry/:id" element={<Entry />} />
-      <Route path="/spaeti" element={<Spaeti />} />
-      <Route path="/doener" element={<Doener />} />
-      <Route path="/vendordetails" element={<VendorDetails />} />
+      <Route className="main-nav-link" path="/memegenerator" element={<MemeGenerator />} />
+      <Route className="main-nav-link" path="/entry/:id" element={<Entry />} />
+      <Route className="main-nav-link" path="/spaeti" element={<Spaeti />} />
+      <Route className="main-nav-link" path="/doener" element={<Doener />} />
+      <Route className="main-nav-link" path="/vendordetails" element={<VendorDetails />} />
     </>
   )
 )
