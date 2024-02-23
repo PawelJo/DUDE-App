@@ -7,27 +7,18 @@ export default function RootLayout({ children }) {
 	const location = useLocation();
 	const isHomePage = location.pathname === '/';
 
-
-
-
-
-
-
 	return (
 		<div className="root-layout">
 			<header className={isHomePage ? 'Headerklasse' : undefined}>
 				<nav>
-
 					<NavLink to="/">
 						<img src="" alt="DUDE" />
 						<div>
 							D.U.D.E
 						</div>
 					</NavLink>
-
 				</nav>
 			</header>
-
 			<main>
 				{!isHomePage && <BackButton />}
 				{children}

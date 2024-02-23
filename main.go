@@ -41,6 +41,13 @@ type Vendor struct {
 	DateCreated string `json:"dateCreated"`
 	RuleText    string `json:"ruleText"`
 }
+type VendorList struct {
+	ID         int    `json:"id"`
+	City       string `json:"city"`
+	Category   string `json:"category"`
+	VendorName string `json:"name"`
+	RuleText   string `json:"ruleText"`
+}
 
 func options(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
@@ -65,7 +72,7 @@ func getVendorsList(w http.ResponseWriter, r *http.Request) {
 
 	category := params.Get("category")
 
-	query := "SELECT V.*, R.ruleText FROM Vendors V JOIN Rules R ON V.category = R.category"
+	query := "SELECT V.id, V.city, V.category, V.vendorName, R.ruleText FROM Vendors V JOIN Rules R ON V.category = R.category"
 
 	if category != "" {
 		query += fmt.Sprintf(" WHERE V.category = %s", category)
@@ -81,11 +88,11 @@ func getVendorsList(w http.ResponseWriter, r *http.Request) {
 	}
 	defer rows.Close()
 
-	var dataSlice []Vendor
+	var dataSlice []VendorList
 
 	for rows.Next() {
-		var d Vendor
-		err := rows.Scan(&d.ID, &d.City, &d.Category, &d.VendorName, &d.Rating, &d.Pros, &d.Cons, &d.GmapsLink, &d.DateCreated, &d.RuleText)
+		var d VendorList
+		err := rows.Scan(&d.ID, &d.City, &d.Category, &d.VendorName, &d.RuleText)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			fmt.Println("we need the whole struct")

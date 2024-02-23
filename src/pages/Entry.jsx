@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 
 export default function Entry() {
 
-
+	console.log("Entry component rendered")
 	const { id } = useParams()
 	const [fetchedData, setFetchedData] = useState({
 		data: [],
@@ -15,7 +15,7 @@ export default function Entry() {
 
 	useEffect(() => {
 		fetchEntry(id, setFetchedData);
-	}, [id, setFetchedData]);
+	}, [id]);
 
 	if (fetchedData.loading) {
 		return <div>Loading...</div>;
