@@ -11,7 +11,7 @@ import MemeGenerator from './pages/MemeGenerator';
 import Doener from './pages/Doener';
 import Spaeti from './pages/Spaeti'
 import Homepage from './pages/Homepage';
-import VendorDetails from './pages/VendorDetails';
+import Suggest from './pages/Suggest';
 
 
 
@@ -34,7 +34,7 @@ const router = createBrowserRouter(
       <Route className="main-nav-link" path="/entry/:id" element={<Entry />} />
       <Route className="main-nav-link" path="/spaeti" element={<Spaeti />} />
       <Route className="main-nav-link" path="/doener" element={<Doener />} />
-      <Route className="main-nav-link" path="/vendordetails" element={<VendorDetails />} />
+      <Route className="main-nav-link" path="/suggest" element={<Suggest />} />
     </>
   )
 )

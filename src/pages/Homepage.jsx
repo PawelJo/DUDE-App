@@ -8,6 +8,7 @@ export default function Homepage() {
 			<NavLink className='main-nav-link' to="/entry">Entry</NavLink>
 			<NavLink className='main-nav-link' to="/doener">Döner</NavLink>
 			<NavLink className='main-nav-link' to="/spaeti">Späti</NavLink>
+			<NavLink className='main-nav-link' to="/suggest">Suggest</NavLink>
 		</RootLayout>
 	)
 }

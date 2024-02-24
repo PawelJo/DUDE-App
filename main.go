@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 
 	"net/http"
@@ -168,11 +169,36 @@ func getEntry(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func addVendor(w http.ResponseWriter, r *http.Request) {
+	var newVendor Vendor
+
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		errorMsg := fmt.Sprintf("Error reading request body: %s", err)
+		http.Error(w, errorMsg, http.StatusBadRequest)
+	}
+
+	err = json.Unmarshal(body, &newVendor)
+	if err != nil {
+		errorMsg := fmt.Sprintf("Error unmarshalling request body: %s", err)
+		http.Error(w, errorMsg, http.StatusBadRequest)
+	}
+
+	_, err = db.Exec("INSERT INTO vendors (city, category, vendorName, rating, pros, cons, gmapsLink, dateCreated) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+		newVendor.City, newVendor.Category, newVendor.VendorName, newVendor.Rating, newVendor.Pros, newVendor.Cons, newVendor.GmapsLink, newVendor.DateCreated)
+	if err != nil {
+		errorMsg := fmt.Sprintf("Error inserting data: %s", err)
+		http.Error(w, errorMsg, http.StatusInternalServerError)
+	}
+
+}
+
 func main() {
 
 	r := mux.NewRouter()
 	r.HandleFunc("/vendors", getVendorsList).Methods(http.MethodGet)
 	r.HandleFunc("/entry", getEntry).Methods(http.MethodGet)
+	r.HandleFunc("/suggest", addVendor).Methods(http.MethodPost)
 	r.HandleFunc("/", options).Methods(http.MethodOptions)
 	log.Fatal(http.ListenAndServe(":8080", r))
 }

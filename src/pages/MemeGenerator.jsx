@@ -20,7 +20,9 @@ export default function MemeGenerator() {
 	return (
 		<Rootlayout>
 			<div>MemeGenerator</div>
-			{meme.data.preview[2] && <img className="meme-img" src={meme.data.preview[2]} alt="meme"></img>}
+			<div className="meme-img-container">
+				<img className="meme-img" src={meme.data.preview[2]} alt="meme"></img>
+			</div>
 			<button onClick={() => fetchMeme(setMeme)}>New Meme</button>
 		</Rootlayout>
 	)
