@@ -51,6 +51,7 @@ type VendorList struct {
 }
 
 func options(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("calling OPTIONS function")
 	enableCors(&w)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
@@ -170,6 +171,14 @@ func getEntry(w http.ResponseWriter, r *http.Request) {
 }
 
 func addVendor(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+	fmt.Println("calling addVendor function")
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		fmt.Println("SHOIGU WHERE IS MY CORS RESPONSE")
+		return
+	}
+
 	var newVendor Vendor
 
 	body, err := ioutil.ReadAll(r.Body)
@@ -183,7 +192,14 @@ func addVendor(w http.ResponseWriter, r *http.Request) {
 		errorMsg := fmt.Sprintf("Error unmarshalling request body: %s", err)
 		http.Error(w, errorMsg, http.StatusBadRequest)
 	}
-
+	fmt.Println("vendorName: " + newVendor.VendorName)
+	fmt.Println("category: " + newVendor.Category)
+	fmt.Println("city: " + newVendor.City)
+	fmt.Println("cons: " + newVendor.Cons)
+	fmt.Println("dateCreated: " + newVendor.DateCreated)
+	fmt.Println("GmapsLink: " + newVendor.GmapsLink)
+	fmt.Println("pros: " + newVendor.Pros)
+	fmt.Println("rating", newVendor.Rating)
 	_, err = db.Exec("INSERT INTO vendors (city, category, vendorName, rating, pros, cons, gmapsLink, dateCreated) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
 		newVendor.City, newVendor.Category, newVendor.VendorName, newVendor.Rating, newVendor.Pros, newVendor.Cons, newVendor.GmapsLink, newVendor.DateCreated)
 	if err != nil {
@@ -196,9 +212,11 @@ func addVendor(w http.ResponseWriter, r *http.Request) {
 func main() {
 
 	r := mux.NewRouter()
+	r.HandleFunc("/", options).Methods(http.MethodOptions)
+	r.HandleFunc("/vendors", options).Methods(http.MethodOptions)
 	r.HandleFunc("/vendors", getVendorsList).Methods(http.MethodGet)
 	r.HandleFunc("/entry", getEntry).Methods(http.MethodGet)
 	r.HandleFunc("/suggest", addVendor).Methods(http.MethodPost)
-	r.HandleFunc("/", options).Methods(http.MethodOptions)
+
 	log.Fatal(http.ListenAndServe(":8080", r))
 }
