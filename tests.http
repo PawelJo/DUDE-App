@@ -1,0 +1,10 @@
+@hostname = http://localhost:8080
+
+### Get Döner
+
+get {{hostname}}/vendors?category="Döner"
+
+
+### Get Entry
+
+get {{hostname}}/entry?id=2

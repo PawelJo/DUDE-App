@@ -6,28 +6,52 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"os"
 
 	"net/http"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 )
 
 var db *sql.DB
 
 func init() {
-	connStr := "root:L5Y8MUmK9w4%p!@tcp(localhost:3306)/dude"
-	var err error
-	db, err = sql.Open("mysql", connStr)
+	// Load connection string from .env file
+	err := godotenv.Load()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("failed to load env", err)
 	}
 
+	// Open a connection to PlanetScale
+	db, err := sql.Open("mysql", os.Getenv("DSN"))
+	/* 	fmt.Println(os.Getenv("DSN"))
+	   	fmt.Println("DB", db) */
+	if err != nil {
+		log.Fatalf("failed to connect: %v", err)
+	}
+
+	fmt.Println("connected to PlanetScale")
+
+	// Test connection
 	err = db.Ping()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("failed to ping: %v", err)
 	}
 
+	rows, err := db.Query("SHOW TABLES")
+	if err != nil {
+		log.Fatalf("failed to query: %v", err)
+	}
+
+	var tableName string
+	for rows.Next() {
+		if err := rows.Scan(&tableName); err != nil {
+			log.Fatalf("failed to scan row: %v", err)
+		}
+		log.Println("found table: ", tableName)
+	}
 }
 
 type Vendor struct {
@@ -74,6 +98,12 @@ func getVendorsList(w http.ResponseWriter, r *http.Request) {
 
 	category := params.Get("category")
 
+	db, err := sql.Open("mysql", os.Getenv("DSN"))
+
+	if err != nil {
+		log.Fatalf("failed to connect: %v", err)
+	}
+
 	query := "SELECT V.id, V.city, V.category, V.vendorName, R.ruleText FROM Vendors V JOIN Rules R ON V.category = R.category"
 
 	if category != "" {
@@ -83,9 +113,10 @@ func getVendorsList(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(query)
 
 	rows, err := db.Query(query)
+	fmt.Println("Here are the rows: ", rows)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
 		fmt.Println("Here we are fucked")
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 	defer rows.Close()
@@ -122,6 +153,12 @@ func getEntry(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	fmt.Println("Gettin' that entry for you")
+
+	db, err := sql.Open("mysql", os.Getenv("DSN"))
+
+	if err != nil {
+		log.Fatalf("failed to connect: %v", err)
+	}
 
 	params := r.URL.Query()
 
@@ -179,6 +216,12 @@ func addVendor(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	db, err := sql.Open("mysql", os.Getenv("DSN"))
+
+	if err != nil {
+		log.Fatalf("failed to connect: %v", err)
+	}
+
 	var newVendor Vendor
 
 	body, err := ioutil.ReadAll(r.Body)
@@ -202,6 +245,7 @@ func addVendor(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("rating", newVendor.Rating)
 	_, err = db.Exec("INSERT INTO vendors (city, category, vendorName, rating, pros, cons, gmapsLink, dateCreated) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
 		newVendor.City, newVendor.Category, newVendor.VendorName, newVendor.Rating, newVendor.Pros, newVendor.Cons, newVendor.GmapsLink, newVendor.DateCreated)
+	fmt.Println("Pleas tell me this worked")
 	if err != nil {
 		errorMsg := fmt.Sprintf("Error inserting data: %s", err)
 		http.Error(w, errorMsg, http.StatusInternalServerError)
@@ -210,6 +254,14 @@ func addVendor(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+
+	logFile, err := os.OpenFile("server-logger.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	if err != nil {
+		log.Fatal("Failed to open log file: ", err)
+	}
+	defer logFile.Close()
+
+	log.SetOutput(logFile)
 
 	r := mux.NewRouter()
 	r.HandleFunc("/", options).Methods(http.MethodOptions)
