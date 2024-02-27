@@ -113,7 +113,7 @@ func getVendorsList(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(query)
 
 	rows, err := db.Query(query)
-	fmt.Println("Here are the rows: ", rows)
+
 	if err != nil {
 		fmt.Println("Here we are fucked")
 		http.Error(w, err.Error(), http.StatusInternalServerError)

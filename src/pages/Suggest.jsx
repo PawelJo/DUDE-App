@@ -33,7 +33,15 @@ export default function Suggest() {
 		}
 		console.log("formattedData: ", formattedData)
 
-		const URL = 'http://localhost:8080/suggest';
+		const mainUrl = window.location.host.includes('localhost')
+			?
+			'http://localhost:8080'
+			:
+			'https://dude-q24d.onrender.com'
+
+		const queryType = '/suggest'
+		const URL = mainUrl + queryType
+
 		const response = await fetch(URL, {
 			method: 'POST',
 			mode: 'no-cors',
