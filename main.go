@@ -144,6 +144,7 @@ func getVendorsList(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	/* fmt.Println(jsonData) */
+
 	w.Write(jsonData)
 
 }
@@ -251,6 +252,9 @@ func addVendor(w http.ResponseWriter, r *http.Request) {
 		errorMsg := fmt.Sprintf("Error inserting data: %s", err)
 		http.Error(w, errorMsg, http.StatusInternalServerError)
 	}
+
+	w.WriteHeader(http.StatusOK)
+	fmt.Println("Status is ok")
 
 }
 

@@ -20,8 +20,6 @@ export default function CategorySelect({ control, name, value, label }) {
 				onBlur={onBlur}
 				value={selectedValue}
 			>
-				{/* 				<option value="Döner">Döner</option>
-				<option value="Späti">Späti</option> */}
 				<CategorySelectOptions value={value} onChange={onChange} />
 			</select>
 

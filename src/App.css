@@ -334,6 +334,37 @@ input {
   cursor: pointer;
 }
 
+
+.rating-group {
+  display: flex;
+  gap: 5px;
+}
+
+.radio-rating-select {
+  display: none;
+}
+
+.radio-rating-select-label {
+  display: inline-block;
+  cursor: pointer;
+  font-size: 15px;
+  color: #ccc;
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 10px;
+  width: 15px;
+  height: 15px;
+  text-align: center;
+
+}
+
+.radio-rating-select-label.active {
+  color: #000;
+  background-color: #bc4123;
+  border: none;
+}
+
+
 .error-message {
   color: red;
   font-size: 20px;
@@ -362,5 +393,33 @@ input {
   width: 100%;
   background-color: #fff;
   color: #000;
+  cursor: pointer;
+}
+
+.submit-message {
+  color: green;
+  font-size: 20px;
+  width: 100%;
+  margin: 10px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #000;
+  font-size: 20px;
+  width: 100%;
+  background-color: #000000;
+  cursor: pointer;
+}
+
+.loading-indicator {
+  color: green;
+  font-size: 20px;
+  width: 100%;
+  margin: 10px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 5px solid #000;
+  font-size: 20px;
+  width: 100%;
+  background-color: #000000;
   cursor: pointer;
 }

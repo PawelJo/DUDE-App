@@ -3,6 +3,9 @@ import Rootlayout from './layouts/RootLayout'
 import { useForm } from "react-hook-form"
 import FormTextInput from './layouts/FormTextInput'
 import CategorySelect from './layouts/CategorySelect'
+import { useState } from 'react'
+import RadioSelectRating from './layouts/RadioSelectRating'
+import RatingGroup from './layouts/RatingGroup'
 
 export default function Suggest() {
 
@@ -11,10 +14,17 @@ export default function Suggest() {
 		handleSubmit,
 		watch,
 		formState: { errors },
-		control
+		control,
+		reset
 	} = useForm()
+
+	const [loading, setLoading] = useState(false)
+	const [submitMessage, setSubmitMessage] = useState('')
+
+
 	const onSubmit = async (data) => {
-		console.log(data)
+		setLoading(true);
+
 
 		const dateAndTimeStamp = new Date().toISOString();
 		const dateStamp = dateAndTimeStamp.split('T')[0];
@@ -50,18 +60,35 @@ export default function Suggest() {
 			},
 			body: JSON.stringify(formattedData),
 		});
-		if (!response.ok) {
-			throw new Error('Network response was not ok');
+		console.log(formattedData)
+
+
+		if (response.type === 'opaque') {
+			reset();
+			setSubmitMessage('Submitted successfully!');
+		} else {
+			setSubmitMessage('Submission failed. Please try again later.');
 		}
+		setLoading(false);
+
+		setTimeout(() => {
+			setSubmitMessage('');
+		}, 3000);
+
 	}
 
-	console.log(watch("category"))
+	console.log(watch("rating"))
 
 	return (
 		<Rootlayout >
 			<div>Suggest a Vendor</div>
 
 			<form onSubmit={handleSubmit(onSubmit)}>
+
+
+				{loading && <p className='loading-indicator'>Loading...</p>}
+
+				{submitMessage && <p className='submit-message'>{submitMessage}</p>}
 				<RadioButtonCity
 					name="city"
 					label="Berlin"
@@ -75,25 +102,18 @@ export default function Suggest() {
 					rules={{ required: "City is required" }}
 					control={control} />
 
-				{/* <select
-					{...register("category")}>
-					<option value="Döner">Döner</option>
-					<option value="Späti">Späti</option>
-				</select> */}
 				<CategorySelect
 					name="category"
 					control={control}
-					value={["Späti", "Döner", "Hurensohn"]}
+					value={["Späti", "Döner"]}
 					label="Category"
 				/>
-
 				<FormTextInput
 					label="Name des Vendors"
 					name="name"
 					control={control}
 					defaultValue=""
 					rules={{ required: "Hurensohn is required" }} />
-
 
 				<FormTextInput
 					label="pros"
@@ -116,19 +136,27 @@ export default function Suggest() {
 					defaultValue=""
 					rules={{ required: "Sag mal jetzt, wo ist diese?" }} />
 
-				<input type="radio" name="rating" value="1" {...register("rating", { required: true })} />
-				<label htmlFor="1">1</label>
-				<input type="radio" name="rating" value="2" {...register("rating", { required: true })} />
-				<label htmlFor="2">2</label>
-				<input type="radio" name="rating" value="3" {...register("rating", { required: true })} />
-				<label htmlFor="3">3</label>
-				<input type="radio" name="rating" value="4" {...register("rating", { required: true })} />
-				<label htmlFor="4">4</label>
-				<input type="radio" name="rating" value="5" {...register("rating", { required: true })} />
-				<label htmlFor="5">5</label>
+
+				<RatingGroup
+					control={control}
+					name="rating"
+					options={[
+						{ value: '1', label: '1' },
+						{ value: '2', label: '2' },
+						{ value: '3', label: '3' },
+						{ value: '4', label: '4' },
+						{ value: '5', label: '5' },
+						{ value: '6', label: '6' },
+						{ value: '7', label: '7' },
+						{ value: '8', label: '8' },
+						{ value: '9', label: '9' },
+						{ value: '10', label: '10' },
+					]}
+				/>
 
 
-				{errors.exampleRequired && <span>This field is required</span>}
+
+
 
 				<input type="submit" />
 			</form>
