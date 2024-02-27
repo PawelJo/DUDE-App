@@ -1,8 +1,9 @@
 const fetchList = async (slug, onDataFetched) => {
-	const mainUrl = 'http://localhost:8080/entry?id=';
+	const mainUrl = window.location.host.includes('localhost') ? 'http://localhost:8080' : 'https://dude-q24d.onrender.com'
 	try {
 		const encodedSlug = slug
-		const endpoint = mainUrl + encodedSlug
+		const queryType = '/entry?id='
+		const endpoint = mainUrl + queryType + encodedSlug
 		const response = await fetch(endpoint);
 		if (!response.ok) {
 			throw new Error('Network response was not ok');
