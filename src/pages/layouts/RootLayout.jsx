@@ -9,10 +9,10 @@ export default function RootLayout({ children }) {
 
 	return (
 		<div className="root-layout">
-			<header className={isHomePage ? 'Headerklasse' : 'header-submenu'}>
+			<header className={isHomePage ? 'header-main-menu' : 'header-submenu'}>
 				<nav>
 					<NavLink to="/">
-						<img src="" alt="DUDE" />
+						{isHomePage && <img className="avatar" src="Avatar@3x.png" alt="DUDE" />}
 						<div>
 							D.U.D.E
 						</div>

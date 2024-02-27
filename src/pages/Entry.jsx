@@ -3,6 +3,8 @@ import fetchEntry from "./utility/fetchEntry";
 import RootLayout from "./layouts/RootLayout";
 import { useParams } from "react-router-dom";
 import ShareButton from "./layouts/ShareButton";
+import EntryHeader from "./layouts/EntryHeader";
+import ProsConsList from "./layouts/ProsConsList";
 
 export default function Entry() {
 
@@ -22,40 +24,31 @@ export default function Entry() {
 		return <div>Loading...</div>;
 	}
 
-	console.log(fetchedData)
-	console.log("fetchedData.data[0]: ", fetchedData.data[0].dateCreated)
+	const vendorData = fetchedData.data[0]
+
+	const formattedPros = vendorData.pros
+		.split(", ")
+	const formattedCons = vendorData.cons
+		.split(", ")
+
+	console.log(vendorData.pros)
+
+
 	return (
 		<RootLayout>
 
-			<ShareButton />
 
-			<h1>{fetchedData.data[0].name}</h1>
-			<table>
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>Category</th>
-						<th>Name</th>
-						<th>Pros</th>
-						<th>Cons</th>
-						<th>Rating</th>
-						<th>Gmapslink</th>
-					</tr>
-				</thead>
-				<tbody>
-					{fetchedData.data.map(entry => (
-						<tr key={entry.id}>
-							<td>{entry.id}</td>
-							<td>{entry.category}</td>
-							<td>{entry.name}</td>
-							<td>{entry.pros}</td>
-							<td>{entry.cons}</td>
-							<td>{entry.rating}</td>
-							<td><a target="_blank" rel="noopener noreferrer" href={entry.gmapslink}>Goto</a></td>
-						</tr>
-					))}
-				</tbody>
-			</table>
+			<EntryHeader vendorData={vendorData} />
+
+
+			<ProsConsList title="Pros" list={formattedPros} />
+
+			<ProsConsList title="Cons" list={formattedCons} />
+
+			<p className="date-created-text">D.U.D.E certified at {vendorData.dateCreated}</p>
+
+
+			<ShareButton />
 
 		</RootLayout>
 	)

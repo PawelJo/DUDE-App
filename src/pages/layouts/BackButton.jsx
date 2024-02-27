@@ -9,7 +9,7 @@ export default function BackButton() {
 	}
 
 	return (
-		<button onClick={handleGoBack}>
+		<button className="back-button" onClick={handleGoBack}>
 			Go Back
 		</button>
 	)

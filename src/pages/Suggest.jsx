@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form"
 import FormTextInput from './layouts/FormTextInput'
 import CategorySelect from './layouts/CategorySelect'
 import { useState } from 'react'
-import RadioSelectRating from './layouts/RadioSelectRating'
 import RatingGroup from './layouts/RatingGroup'
 
 export default function Suggest() {
@@ -81,7 +80,7 @@ export default function Suggest() {
 
 	return (
 		<Rootlayout >
-			<div>Suggest a Vendor</div>
+			<p className='suggest-header'>Suggest a Vendor</p>
 
 			<form onSubmit={handleSubmit(onSubmit)}>
 
@@ -89,31 +88,34 @@ export default function Suggest() {
 				{loading && <p className='loading-indicator'>Loading...</p>}
 
 				{submitMessage && <p className='submit-message'>{submitMessage}</p>}
-				<RadioButtonCity
-					name="city"
-					label="Berlin"
-					value="Berlin"
-					rules={{ required: "City is required" }}
-					control={control} />
-				<RadioButtonCity
-					name="city"
-					label="Wien"
-					value="Wien"
-					rules={{ required: "City is required" }}
-					control={control} />
 
-				<CategorySelect
-					name="category"
-					control={control}
-					value={["Späti", "Döner"]}
-					label="Category"
-				/>
+
+				<div className='radio-city-wrapper'>
+					<RadioButtonCity
+						name="city"
+						label="Berlin"
+						value="Berlin"
+						rules={{ required: "City is required" }}
+						control={control} />
+					<RadioButtonCity
+						name="city"
+						label="Wien"
+						value="Wien"
+						rules={{ required: "City is required" }}
+						control={control} />
+				</div>
 				<FormTextInput
 					label="Name des Vendors"
 					name="name"
 					control={control}
 					defaultValue=""
 					rules={{ required: "Hurensohn is required" }} />
+				<CategorySelect
+					name="category"
+					control={control}
+					value={["Späti", "Döner"]}
+					label="Category"
+				/>
 
 				<FormTextInput
 					label="pros"
@@ -146,11 +148,7 @@ export default function Suggest() {
 						{ value: '3', label: '3' },
 						{ value: '4', label: '4' },
 						{ value: '5', label: '5' },
-						{ value: '6', label: '6' },
-						{ value: '7', label: '7' },
-						{ value: '8', label: '8' },
-						{ value: '9', label: '9' },
-						{ value: '10', label: '10' },
+
 					]}
 				/>
 
@@ -158,7 +156,7 @@ export default function Suggest() {
 
 
 
-				<input type="submit" />
+				<button className='submit-button' type="submit" >-- [ SEND ] --</button>
 			</form>
 
 

@@ -33,7 +33,7 @@ const ShareButton = () => {
 
 	return (
 		<div id="shareButtonContainer">
-			<button id="shareButton">Share</button>
+			<button className="share-button" id="shareButton">-- Share --</button>
 		</div>
 	);
 };

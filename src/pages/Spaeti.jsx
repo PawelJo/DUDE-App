@@ -21,7 +21,7 @@ export default function Spaeti() {
 	return (
 		<RootLayout>
 			<h1>Späti</h1>
-
+			<h2>-- Regeln</h2>
 			<VendorList data={fetchedData.data} loading={fetchedData.loading} />
 		</RootLayout>
 	)

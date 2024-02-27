@@ -21,7 +21,8 @@ export default function Doener() {
 	return (
 		<RootLayout>
 			<h1>Döner</h1>
-			<VendorList data={fetchedData.data} loading={fetchedData.loading} />
+			<h2>-- Regeln</h2>
+			<VendorList className="vendor-list" data={fetchedData.data} loading={fetchedData.loading} />
 		</RootLayout>
 	)
 }

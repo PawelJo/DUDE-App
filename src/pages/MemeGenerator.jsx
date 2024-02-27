@@ -19,11 +19,11 @@ export default function MemeGenerator() {
 	console.log("Preview-URL :", meme.data.preview[1]);
 	return (
 		<Rootlayout>
-			<div>MemeGenerator</div>
+			<p className="meme-generator-header">MemeGenerator</p>
 			<div className="meme-img-container">
 				<img className="meme-img" src={meme.data.preview[2]} alt="meme"></img>
 			</div>
-			<button onClick={() => fetchMeme(setMeme)}>New Meme</button>
+			<button className="new-meme-button" onClick={() => fetchMeme(setMeme)}>-- GIMME NEW MEME --</button>
 		</Rootlayout>
 	)
 }

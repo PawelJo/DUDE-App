@@ -12,22 +12,23 @@ export default function CategorySelect({ control, name, value, label }) {
 		control,
 		defaultValue: '',
 	})
+	const placeholder = label
 	return (
 		<>
 			<select
-				className="category-select"
+				className={`category-select ${selectedValue === '' ? 'placeholder-style' : ''}`}
 				onChange={onChange}
 				onBlur={onBlur}
 				value={selectedValue}
 			>
-				<CategorySelectOptions value={value} onChange={onChange} />
-			</select>
 
-			<label
-				htmlFor="category"
-			>
-				{label}
-			</label>
+				<option value="" disabled hidden className="category-option-placeholder">
+					{placeholder}
+				</option>
+
+				<CategorySelectOptions value={value} onChange={onChange} />
+			</select >
+
 		</>
 	)
 }
