@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import fetchEntry from "./utility/fetchEntry";
 import RootLayout from "./layouts/RootLayout";
 import { useParams } from "react-router-dom";
+import ShareButton from "./layouts/ShareButton";
 
 export default function Entry() {
 
@@ -25,6 +26,9 @@ export default function Entry() {
 	console.log("fetchedData.data[0]: ", fetchedData.data[0].dateCreated)
 	return (
 		<RootLayout>
+
+			<ShareButton />
+
 			<h1>{fetchedData.data[0].name}</h1>
 			<table>
 				<thead>

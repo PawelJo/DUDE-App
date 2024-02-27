@@ -423,3 +423,8 @@ input {
   background-color: #000000;
   cursor: pointer;
 }
+
+.header-submenu {
+  width: 100%;
+
+}
