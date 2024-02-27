@@ -243,10 +243,11 @@ func addVendor(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("GmapsLink: " + newVendor.GmapsLink)
 	fmt.Println("pros: " + newVendor.Pros)
 	fmt.Println("rating", newVendor.Rating)
-	_, err = db.Exec("INSERT INTO vendors (city, category, vendorName, rating, pros, cons, gmapsLink, dateCreated) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+	_, err = db.Exec("INSERT INTO Vendors (city, category, vendorName, rating, pros, cons, gmapsLink, dateCreated) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
 		newVendor.City, newVendor.Category, newVendor.VendorName, newVendor.Rating, newVendor.Pros, newVendor.Cons, newVendor.GmapsLink, newVendor.DateCreated)
 	fmt.Println("Pleas tell me this worked")
 	if err != nil {
+		fmt.Println("Dings hier ist einer krumm")
 		errorMsg := fmt.Sprintf("Error inserting data: %s", err)
 		http.Error(w, errorMsg, http.StatusInternalServerError)
 	}
