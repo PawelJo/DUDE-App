@@ -1,20 +1,37 @@
 import { NavLink } from "react-router-dom"
+import SearchResultAddress from "./SearchResultAddress"
+import SearchInput from "./SearchInput"
 
 export default function SearchResults({ searchQuery, searchResults, handleInputChange }) {
-	console.log("searchResults in searchresults.jsx: ", searchResults)
-
 
 	return (
 		<>
-			<input className='form-input' value={searchQuery} onChange={handleInputChange} placeholder='Search' />
-			{searchResults ? (
-				<ul>
-					{searchResults.map((result) => (
-						<li key={result.id}>
-							<NavLink className={"entry-nav-link"} to={`/entry/${result.id}`}>{result.name}</NavLink>
-						</li>
-					))}
-				</ul>) : null}
+			<SearchInput
+				searchQuery={searchQuery}
+				handleInputChange={handleInputChange}
+			/>
+
+			{searchResults ?
+				(
+					<ul className="search-results-list">
+						{searchResults.map((result) => (
+							<li
+								className="search-results-list-item"
+								key={result.id}>
+								<NavLink
+									className={"search-nav-link"}
+									to={`/entry/${result.id}`}>
+									{result.name}
+								</NavLink>
+
+								<SearchResultAddress address={result.address} />
+
+							</li>
+						))}
+					</ul>
+				)
+				:
+				null}
 		</>
 	)
 }

@@ -29,12 +29,15 @@ export default function Search() {
 		setSearchQuery(event.target.value);
 	}
 
-	console.log("searchresults in search.jsx: ", searchResults)
 
 	return (
 		<RootLayout>
 
-			<SearchResults searchQuery={searchQuery} searchResults={searchResults} handleInputChange={handleInputChange} />
+			<SearchResults
+				searchQuery={searchQuery}
+				searchResults={searchResults}
+				handleInputChange={handleInputChange}
+			/>
 		</RootLayout>
 	)
 }

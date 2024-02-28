@@ -35,9 +35,6 @@ export default function Entry() {
 
 	const { String: addressString } = vendorData.address || {};
 
-	console.log("the maps link is : ", vendorData.gmapsLink)
-	/* console.log("the address is: ", addressText) */
-	/* const formattedAddress = vendorData.address.split("· ", ", ") */
 
 
 	return (

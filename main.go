@@ -236,8 +236,8 @@ func searchVendors(w http.ResponseWriter, r *http.Request) {
 	query := "SELECT id, vendorName, category, address FROM Vendors"
 
 	if cleanedSearchParam != "" {
-		query += fmt.Sprintf(" WHERE vendorName LIKE '%%%s%%'", cleanedSearchParam)
-		fmt.Println(cleanedSearchParam)
+		query += fmt.Sprintf(" WHERE vendorName LIKE '%%%s%%' OR address LIKE '%%%s%%'", cleanedSearchParam, cleanedSearchParam)
+
 	}
 	fmt.Println(query)
 
