@@ -132,3 +132,16 @@ SELECT V.*,
 FROM Vendors V
 	JOIN Rules R ON V.category = R.category
 WHERE V.category = "Späti";
+-- @block
+CREATE TABLE Vendors(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	city VARCHAR(255) NOT NULL,
+	category VARCHAR(255) NOT NULL,
+	vendorName VARCHAR(255) NOT NULL,
+	rating INT,
+	pros TEXT,
+	cons TEXT,
+	GmapsLink TEXT,
+	dateCreated DATE,
+	address VARCHAR(255)
+);

@@ -1,16 +1,18 @@
 import { useController } from "react-hook-form"
 import CategorySelectOptions from "./CategorySelectOptions"
 
-export default function CategorySelect({ control, name, value, label }) {
+export default function CategorySelect({ control, name, value, label, rules }) {
 
 
 
 	const {
 		field: { onChange, onBlur, value: selectedValue },
+		fieldState: { invalid, error },
 	} = useController({
 		name,
 		control,
 		defaultValue: '',
+		rules
 	})
 	const placeholder = label
 	return (
@@ -28,6 +30,7 @@ export default function CategorySelect({ control, name, value, label }) {
 
 				<CategorySelectOptions value={value} onChange={onChange} />
 			</select >
+			{invalid && <p className="error-message">{error?.message}</p>}
 
 		</>
 	)

@@ -76,7 +76,7 @@ export default function Suggest() {
 
 	}
 
-	console.log(watch("rating"))
+	const isCityValid = !errors.city
 
 	return (
 		<Rootlayout >
@@ -104,17 +104,22 @@ export default function Suggest() {
 						rules={{ required: "City is required" }}
 						control={control} />
 				</div>
+
+				{isCityValid ? null : (
+					<p className="error-message">{errors.city?.message}</p>
+				)}
 				<FormTextInput
 					label="Name des Vendors"
 					name="name"
 					control={control}
 					defaultValue=""
-					rules={{ required: "Hurensohn is required" }} />
+					rules={{ required: "Name is required" }} />
 				<CategorySelect
 					name="category"
 					control={control}
 					value={["Späti", "Döner"]}
 					label="Category"
+					rules={{ required: "Category is required" }}
 				/>
 
 				<FormTextInput
