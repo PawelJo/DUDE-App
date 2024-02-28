@@ -33,9 +33,8 @@ const VendorList = ({ data, loading, error }) => {
 			console.log("Couldn't match city")
 		}
 	})
-	console.log("berlin Vendors", berlinVendors)
 
-
+	console.log(formattedRuleText)
 
 	return (
 		<>

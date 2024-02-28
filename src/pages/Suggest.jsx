@@ -117,7 +117,7 @@ export default function Suggest() {
 				<CategorySelect
 					name="category"
 					control={control}
-					value={["Späti", "Döner"]}
+					value={["Späti", "Döner", "Frisör"]}
 					label="Category"
 					rules={{ required: "Category is required" }}
 				/>
