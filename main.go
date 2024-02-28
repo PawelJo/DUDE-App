@@ -10,6 +10,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
@@ -74,6 +75,12 @@ type VendorList struct {
 	Category   string `json:"category"`
 	VendorName string `json:"name"`
 	RuleText   string `json:"ruleText"`
+}
+type SearchResult struct {
+	ID         int            `json:"id"`
+	Category   string         `json:"category"`
+	VendorName string         `json:"name"`
+	Address    sql.NullString `json:"address"`
 }
 
 func options(w http.ResponseWriter, r *http.Request) {
@@ -209,6 +216,65 @@ func getEntry(w http.ResponseWriter, r *http.Request) {
 	w.Write(jsonData)
 
 }
+func searchVendors(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	fmt.Println("Gettin' that entry for you")
+
+	db, err := sql.Open("mysql", os.Getenv("DSN"))
+
+	if err != nil {
+		log.Fatalf("failed to connect: %v", err)
+	}
+
+	params := r.URL.Query()
+
+	searchParam := params.Get("query")
+	cleanedSearchParam := strings.Trim(searchParam, `"';`)
+	fmt.Println(cleanedSearchParam)
+	query := "SELECT id, vendorName, category, address FROM Vendors"
+
+	if cleanedSearchParam != "" {
+		query += fmt.Sprintf(" WHERE vendorName LIKE '%%%s%%'", cleanedSearchParam)
+		fmt.Println(cleanedSearchParam)
+	}
+	fmt.Println(query)
+
+	rows, err := db.Query(query)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		fmt.Println("Here we are fucked")
+		return
+	}
+	defer rows.Close()
+
+	var dataSlice []SearchResult
+
+	for rows.Next() {
+		var d SearchResult
+		err := rows.Scan(&d.ID, &d.VendorName, &d.Category, &d.Address)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			fmt.Println("we need the whole struct")
+			return
+		}
+		dataSlice = append(dataSlice, d)
+	}
+
+	if err := rows.Err(); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	jsonData, err := json.Marshal(dataSlice)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	/* fmt.Println(jsonData) */
+	w.Write(jsonData)
+
+}
 
 func addVendor(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
@@ -278,6 +344,7 @@ func main() {
 	r.HandleFunc("/vendors", getVendorsList).Methods(http.MethodGet)
 	r.HandleFunc("/entry", getEntry).Methods(http.MethodGet)
 	r.HandleFunc("/suggest", addVendor).Methods(http.MethodPost)
+	r.HandleFunc("/search", searchVendors).Methods(http.MethodGet)
 
 	log.Fatal(http.ListenAndServe(":8080", r))
 }

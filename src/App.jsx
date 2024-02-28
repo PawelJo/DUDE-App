@@ -12,6 +12,7 @@ import Doener from './pages/Doener';
 import Spaeti from './pages/Spaeti'
 import Homepage from './pages/Homepage';
 import Suggest from './pages/Suggest';
+import Search from './pages/Search';
 
 
 
@@ -35,6 +36,7 @@ const router = createBrowserRouter(
       <Route className="main-nav-link" path="/spaeti" element={<Spaeti />} />
       <Route className="main-nav-link" path="/doener" element={<Doener />} />
       <Route className="main-nav-link" path="/suggest" element={<Suggest />} />
+      <Route className="main-nav-link" path="/search" element={<Search />} />
     </>
   )
 )
