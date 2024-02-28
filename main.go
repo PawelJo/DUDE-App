@@ -2,13 +2,14 @@ package main
 
 import (
 	"database/sql"
+	"dude/App"
+	_ "dude/App"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
-	"os"
-
 	"net/http"
+	"os"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
@@ -55,16 +56,17 @@ func init() {
 }
 
 type Vendor struct {
-	ID          int    `json:"id"`
-	City        string `json:"city"`
-	Category    string `json:"category"`
-	VendorName  string `json:"name"`
-	Rating      int    `json:"rating"`
-	Pros        string `json:"pros"`
-	Cons        string `json:"cons"`
-	GmapsLink   string `json:"gmapsLink"`
-	DateCreated string `json:"dateCreated"`
-	RuleText    string `json:"ruleText"`
+	ID          int            `json:"id"`
+	City        string         `json:"city"`
+	Category    string         `json:"category"`
+	VendorName  string         `json:"name"`
+	Rating      int            `json:"rating"`
+	Pros        string         `json:"pros"`
+	Cons        string         `json:"cons"`
+	GmapsLink   string         `json:"gmapsLink"`
+	DateCreated string         `json:"dateCreated"`
+	RuleText    string         `json:"ruleText"`
+	Address     sql.NullString `json:"address"`
 }
 type VendorList struct {
 	ID         int    `json:"id"`
@@ -185,7 +187,7 @@ func getEntry(w http.ResponseWriter, r *http.Request) {
 
 	for rows.Next() {
 		var d Vendor
-		err := rows.Scan(&d.ID, &d.City, &d.Category, &d.VendorName, &d.Rating, &d.Pros, &d.Cons, &d.GmapsLink, &d.DateCreated)
+		err := rows.Scan(&d.ID, &d.City, &d.Category, &d.VendorName, &d.Rating, &d.Pros, &d.Cons, &d.GmapsLink, &d.DateCreated, &d.Address)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			fmt.Println("we need the whole struct")
@@ -236,16 +238,16 @@ func addVendor(w http.ResponseWriter, r *http.Request) {
 		errorMsg := fmt.Sprintf("Error unmarshalling request body: %s", err)
 		http.Error(w, errorMsg, http.StatusBadRequest)
 	}
-	fmt.Println("vendorName: " + newVendor.VendorName)
-	fmt.Println("category: " + newVendor.Category)
-	fmt.Println("city: " + newVendor.City)
-	fmt.Println("cons: " + newVendor.Cons)
-	fmt.Println("dateCreated: " + newVendor.DateCreated)
-	fmt.Println("GmapsLink: " + newVendor.GmapsLink)
-	fmt.Println("pros: " + newVendor.Pros)
-	fmt.Println("rating", newVendor.Rating)
-	_, err = db.Exec("INSERT INTO Vendors (city, category, vendorName, rating, pros, cons, gmapsLink, dateCreated) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-		newVendor.City, newVendor.Category, newVendor.VendorName, newVendor.Rating, newVendor.Pros, newVendor.Cons, newVendor.GmapsLink, newVendor.DateCreated)
+
+	address, err := App.Execute(newVendor.GmapsLink)
+	if err != nil {
+		fmt.Println("fetching address failed")
+		return
+	}
+	fmt.Println(address)
+
+	_, err = db.Exec("INSERT INTO Vendors (city, category, vendorName, rating, pros, cons, gmapsLink, dateCreated, address) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+		newVendor.City, newVendor.Category, newVendor.VendorName, newVendor.Rating, newVendor.Pros, newVendor.Cons, newVendor.GmapsLink, newVendor.DateCreated, address)
 	fmt.Println("Pleas tell me this worked")
 	if err != nil {
 		fmt.Println("Dings hier ist einer krumm")
@@ -259,6 +261,8 @@ func addVendor(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+
+	App.Execute("https://maps.app.goo.gl/cJ3WFivwvSo2aV65A")
 
 	logFile, err := os.OpenFile("server-logger.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {

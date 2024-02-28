@@ -2,7 +2,7 @@
 
 const fetchMeme = async (memeSetter) => {
 	try {
-		const response = await fetch('https://meme-api.com/gimme/ich_iel');
+		const response = await fetch('https://meme-api.com/gimme/programmerhumor');
 		if (!response.ok) {
 			throw new Error('Network response was not ok')
 		}

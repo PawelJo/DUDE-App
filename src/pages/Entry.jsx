@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom";
 import ShareButton from "./layouts/ShareButton";
 import EntryHeader from "./layouts/EntryHeader";
 import ProsConsList from "./layouts/ProsConsList";
+import AddressText from "./layouts/AddressText";
+import MapsLink from "./layouts/MapsLink";
 
 export default function Entry() {
 
@@ -31,7 +33,11 @@ export default function Entry() {
 	const formattedCons = vendorData.cons
 		.split(", ")
 
-	console.log(vendorData.pros)
+	const { String: addressString } = vendorData.address || {};
+
+	console.log("the maps link is : ", vendorData.gmapsLink)
+	/* console.log("the address is: ", addressText) */
+	/* const formattedAddress = vendorData.address.split("· ", ", ") */
 
 
 	return (
@@ -45,10 +51,13 @@ export default function Entry() {
 
 			<ProsConsList title="Cons" list={formattedCons} />
 
+
 			<p className="date-created-text">D.U.D.E certified at {vendorData.dateCreated}</p>
 
-
+			{addressString && <AddressText addressText={addressString} />}
 			<ShareButton />
+
+			{vendorData.gmapsLink && <MapsLink mapsLink={vendorData.gmapsLink} />}
 
 		</RootLayout>
 	)
