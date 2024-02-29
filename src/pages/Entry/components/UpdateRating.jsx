@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form"
-import RatingGroup from "./RatingGroup"
+import RatingGroup from "../../../components/RatingGroup.jsx"
 
 import { useState } from 'react'
 

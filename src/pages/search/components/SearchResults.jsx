@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom"
-import SearchResultAddress from "./SearchResultAddress"
-import SearchInput from "./SearchInput"
+import SearchResultAddress from "./SearchResultAddress.jsx"
+import SearchInput from "./SearchInput.jsx"
 
 export default function SearchResults({ searchQuery, searchResults, handleInputChange }) {
 

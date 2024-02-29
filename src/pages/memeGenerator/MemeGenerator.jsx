@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import fetchMeme from "./utility/fetchMeme";
-import Rootlayout from "./layouts/RootLayout";
+import fetchMeme from "../utility/fetchMeme.jsx";
+import Rootlayout from "../layouts/RootLayout.jsx";
 
 
 export default function MemeGenerator() {

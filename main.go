@@ -319,7 +319,7 @@ func addVendor(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Println(address)
 
-	_, err = db.Exec("INSERT INTO Vendors (city, category, vendorName, rating, pros, cons, gmapsLink, dateCreated, address) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+	_, err = db.Exec("INSERT INTO Vendors (city, category, vendorName, rating, pros, cons, gmapsLink, dateCreated, address, ratingCount) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1)",
 		newVendor.City, newVendor.Category, newVendor.VendorName, newVendor.Rating, newVendor.Pros, newVendor.Cons, newVendor.GmapsLink, newVendor.DateCreated, address)
 	fmt.Println("Pleas tell me this worked")
 	if err != nil {

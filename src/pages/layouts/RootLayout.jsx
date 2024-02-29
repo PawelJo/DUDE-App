@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { useLocation } from 'react-router-dom';
-import BackButton from './BackButton'
+import BackButton from '../../components/ui/BackButton.jsx'
 
 
 export default function RootLayout({ children }) {

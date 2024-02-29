@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
-import RootLayout from './layouts/RootLayout';
-import VendorList from './layouts/VendorList';
-import fetchList from './utility/fetchList';
+import RootLayout from '../layouts/RootLayout.jsx';
+import VendorList from './components/VendorList.jsx';
+import fetchList from '../utility/fetchList.jsx';
 
 
-export default function Doener() {
+export default function Toiletten() {
 
 
-	const slug = '"Döner"'
+	const slug = '"Toiletten"'
 	const [fetchedData, setFetchedData] = useState({
 		data: [],
 		loading: true,
@@ -20,7 +20,7 @@ export default function Doener() {
 
 	return (
 		<RootLayout>
-			<h1>Döner</h1>
+			<h1>Toiletten</h1>
 			<h2>-- Regeln</h2>
 			<VendorList className="vendor-list" data={fetchedData.data} loading={fetchedData.loading} />
 		</RootLayout>

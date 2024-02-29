@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import RootLayout from './layouts/RootLayout';
-import VendorList from './layouts/VendorList';
-import fetchList from './utility/fetchList';
+import RootLayout from '../layouts/RootLayout.jsx';
+import VendorList from './components/VendorList.jsx';
+import fetchList from '../utility/fetchList.jsx';
 
 
 export default function Frisoer() {

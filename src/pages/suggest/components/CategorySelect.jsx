@@ -1,5 +1,5 @@
 import { useController } from "react-hook-form"
-import CategorySelectOptions from "./CategorySelectOptions"
+import CategorySelectOptions from "../../../components/ui/CategorySelectOptions.jsx"
 
 export default function CategorySelect({ control, name, value, label, rules }) {
 

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react"
-import fetchEntry from "./utility/fetchEntry";
-import RootLayout from "./layouts/RootLayout";
+import fetchEntry from "../utility/fetchEntry.jsx";
+import RootLayout from "../layouts/RootLayout.jsx";
 import { useParams } from "react-router-dom";
-import ShareButton from "./layouts/ShareButton";
-import EntryHeader from "./layouts/EntryHeader";
-import ProsConsList from "./layouts/ProsConsList";
-import AddressText from "./layouts/AddressText";
-import MapsLink from "./layouts/MapsLink";
-import UpdateRating from "./layouts/UpdateRating";
+import ShareButton from "./components/ShareButton.jsx";
+import EntryHeader from "./components/EntryHeader.jsx";
+import ProsConsList from "./components/ProsConsList.jsx";
+import AddressText from "../../components/ui/AddressText.jsx";
+import MapsLink from "./components/MapsLink.jsx";
+import UpdateRating from "./components/UpdateRating.jsx";
 
 
 export default function Entry() {
@@ -29,8 +29,8 @@ export default function Entry() {
 		return <div>Loading...</div>;
 	}
 
-
 	const vendorData = fetchedData.data[0]
+	console.log(vendorData)
 
 	const formattedPros = vendorData.pros
 		.split(", ")

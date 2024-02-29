@@ -1,10 +1,10 @@
-import RadioButtonCity from './layouts/RadioButtonCity'
-import Rootlayout from './layouts/RootLayout'
+import RadioButtonCity from './components/RadioButtonCity.jsx'
+import Rootlayout from '../layouts/RootLayout.jsx'
 import { useForm } from "react-hook-form"
-import FormTextInput from './layouts/FormTextInput'
-import CategorySelect from './layouts/CategorySelect'
+import FormTextInput from './components/FormTextInput.jsx'
+import CategorySelect from './components/CategorySelect.jsx'
 import { useState } from 'react'
-import RatingGroup from './layouts/RatingGroup'
+import RatingGroup from '../../components/RatingGroup.jsx'
 
 export default function Suggest() {
 
@@ -120,7 +120,7 @@ export default function Suggest() {
 				<CategorySelect
 					name="category"
 					control={control}
-					value={["Späti", "Döner", "Frisör"]}
+					value={["Späti", "Döner", "Frisör", "Toiletten", "Bars"]}
 					label="Category"
 					rules={{ required: "Category is required" }}
 				/>

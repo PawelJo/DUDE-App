@@ -1,4 +1,4 @@
-import CityList from "./CityList";
+import CityList from "./CityList.jsx";
 
 const VendorList = ({ data, loading, error }) => {
 	if (loading) {

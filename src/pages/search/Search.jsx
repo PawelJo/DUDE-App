@@ -1,9 +1,9 @@
-import RootLayout from './layouts/RootLayout'
+import RootLayout from '../layouts/RootLayout.jsx'
 import { useState } from 'react';
 import { useEffect } from 'react';
 
-import fetchSearchResults from './utility/fetchSearchResults';
-import SearchResults from './layouts/SearchResults';
+import fetchSearchResults from '../utility/fetchSearchResults.jsx';
+import SearchResults from './components/SearchResults.jsx';
 
 export default function Search() {
 

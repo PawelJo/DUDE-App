@@ -1,4 +1,4 @@
-import RadioSelectRating from './RadioSelectRating';
+import RadioSelectRating from './RadioSelectRating.jsx';
 
 export default function RatingGroup({ control, name, options, rules }) {
 	return (
