@@ -123,14 +123,14 @@ export default function Suggest() {
 				/>
 
 				<FormTextInput
-					label="pros"
+					label="pros (comma separated)"
 					name="pros"
 					control={control}
 					defaultValue=""
 					rules={{ required: "Sag was gut ist daran" }} />
 
 				<FormTextInput
-					label="cons"
+					label="cons (comma separated)"
 					name="cons"
 					control={control}
 					defaultValue=""

@@ -61,13 +61,14 @@ type Vendor struct {
 	City        string         `json:"city"`
 	Category    string         `json:"category"`
 	VendorName  string         `json:"name"`
-	Rating      int            `json:"rating"`
+	Rating      float64        `json:"rating"`
 	Pros        string         `json:"pros"`
 	Cons        string         `json:"cons"`
 	GmapsLink   string         `json:"gmapsLink"`
 	DateCreated string         `json:"dateCreated"`
 	RuleText    string         `json:"ruleText"`
 	Address     sql.NullString `json:"address"`
+	RatingCount int            `json:"ratingcount"`
 }
 type VendorList struct {
 	ID         int    `json:"id"`
@@ -81,6 +82,12 @@ type SearchResult struct {
 	Category   string         `json:"category"`
 	VendorName string         `json:"name"`
 	Address    sql.NullString `json:"address"`
+}
+type NewRating struct {
+	ID          int     `json:"id"`
+	Rating      float64 `json:"rating"`
+	OldRating   float64 `json:"oldrating"`
+	RatingCount int     `json:"ratingcount"`
 }
 
 func options(w http.ResponseWriter, r *http.Request) {
@@ -194,7 +201,7 @@ func getEntry(w http.ResponseWriter, r *http.Request) {
 
 	for rows.Next() {
 		var d Vendor
-		err := rows.Scan(&d.ID, &d.City, &d.Category, &d.VendorName, &d.Rating, &d.Pros, &d.Cons, &d.GmapsLink, &d.DateCreated, &d.Address)
+		err := rows.Scan(&d.ID, &d.City, &d.Category, &d.VendorName, &d.Rating, &d.Pros, &d.Cons, &d.GmapsLink, &d.DateCreated, &d.Address, &d.RatingCount)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			fmt.Println("we need the whole struct")
@@ -325,6 +332,54 @@ func addVendor(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Status is ok")
 
 }
+func updateRating(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+	fmt.Println("calling updateRating function")
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		fmt.Println("SHOIGU WHERE IS MY CORS RESPONSE")
+		return
+	}
+
+	db, err := sql.Open("mysql", os.Getenv("DSN"))
+
+	if err != nil {
+		log.Fatalf("failed to connect: %v", err)
+	}
+
+	var newRating NewRating
+
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		errorMsg := fmt.Sprintf("Error reading request body: %s", err)
+		http.Error(w, errorMsg, http.StatusBadRequest)
+	}
+
+	err = json.Unmarshal(body, &newRating)
+	if err != nil {
+		errorMsg := fmt.Sprintf("Error unmarshalling request body: %s", err)
+		http.Error(w, errorMsg, http.StatusBadRequest)
+	}
+
+	fmt.Println("ID as recieved by server :", newRating.ID)
+	fmt.Println("rating as recieved by server :", newRating.Rating)
+	fmt.Println("rating count as recieved by server :", newRating.RatingCount)
+
+	updatedRating := float64(newRating.OldRating*float64(newRating.RatingCount)+newRating.Rating) / float64(newRating.RatingCount+1)
+	updatedRatingCount := newRating.RatingCount + 1
+	fmt.Println("updated rating :", updatedRating)
+	fmt.Println("new rating count :", updatedRatingCount)
+
+	_, err = db.Exec("UPDATE Vendors SET rating = ?, ratingcount = ? WHERE id = ?", updatedRating, updatedRatingCount, newRating.ID)
+	if err != nil {
+		errorMsg := fmt.Sprintf("Error inserting data: %s", err)
+		http.Error(w, errorMsg, http.StatusInternalServerError)
+	}
+
+	w.WriteHeader(http.StatusOK)
+	fmt.Println("Rating has been updated")
+
+}
 
 func main() {
 
@@ -344,6 +399,7 @@ func main() {
 	r.HandleFunc("/vendors", getVendorsList).Methods(http.MethodGet)
 	r.HandleFunc("/entry", getEntry).Methods(http.MethodGet)
 	r.HandleFunc("/suggest", addVendor).Methods(http.MethodPost)
+	r.HandleFunc("/updateRating", updateRating).Methods(http.MethodPost)
 	r.HandleFunc("/search", searchVendors).Methods(http.MethodGet)
 
 	log.Fatal(http.ListenAndServe(":8080", r))

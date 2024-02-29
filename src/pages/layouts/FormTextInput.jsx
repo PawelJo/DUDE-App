@@ -17,7 +17,7 @@ const FormTextInput = ({ label, name, control, defaultValue, rules, ...rest }) =
 
 	return (
 		<>
-			{/* <label className='form-label'>{label}</label> */}
+
 			<input
 				className="form-input"
 				type="text"
