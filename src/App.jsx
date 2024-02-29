@@ -16,6 +16,7 @@ import Search from './pages/search/Search.jsx';
 import Frisoer from './pages/categoryPages/Frisoer.jsx';
 import Toiletten from './pages/categoryPages/Toiletten.jsx';
 import Bars from './pages/categoryPages/Bars.jsx';
+import NotFound from './pages/NotFound.jsx';
 
 
 
@@ -43,6 +44,7 @@ const router = createBrowserRouter(
       <Route className="main-nav-link" path="/bars" element={<Bars />} />
       <Route className="main-nav-link" path="/suggest" element={<Suggest />} />
       <Route className="main-nav-link" path="/search" element={<Search />} />
+      <Route className="main-nav-link" path="*" element={<NotFound />} />
     </>
   )
 )

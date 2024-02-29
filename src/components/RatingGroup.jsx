@@ -4,7 +4,7 @@ export default function RatingGroup({ control, name, options, rules }) {
 	return (
 		<>
 
-			<label className="form-label" htmlFor='rating'>RATING</label>
+			<label className="form-label" htmlFor='rating'>RATE THIS ESTABLISHMENT</label>
 			<div className="rating-group">
 				{options.map((option) => (
 					<RadioSelectRating

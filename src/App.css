@@ -494,6 +494,23 @@ main {
   box-sizing: border-box;
 }
 
+.address-block {
+  width: 100%;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  color: #ffffff;
+  font-family: "Roboto Mono";
+  box-sizing: border-box;
+}
+
+.date-created-text {
+  margin-top: 10px;
+  margin-bottom: 30px;
+  color: #ffffff;
+  font-family: "Roboto Mono";
+  box-sizing: border-box;
+}
+
 .search-input {
 
   margin-top: 15px;

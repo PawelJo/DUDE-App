@@ -51,10 +51,10 @@ export default function Entry() {
 
 			<ProsConsList title="Cons" list={formattedCons} />
 
+			{addressString && <AddressText addressText={addressString} />}
 
 			<p className="date-created-text">D.U.D.E certified at {vendorData.dateCreated}</p>
 
-			{addressString && <AddressText addressText={addressString} />}
 			<UpdateRating vendorData={vendorData} setRatingCompleted={setRatingCompleted} />
 
 			<div className="share-gmaps-button-container">
