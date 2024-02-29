@@ -54,12 +54,14 @@ export default function Entry() {
 
 			<p className="date-created-text">D.U.D.E certified at {vendorData.dateCreated}</p>
 
-			{addressString && <AddressText addressText={addressString} />}
-			<ShareButton />
-
-			{vendorData.gmapsLink && <MapsLink mapsLink={vendorData.gmapsLink} />}
-
 			<UpdateRating vendorData={vendorData} setRatingCompleted={setRatingCompleted} />
+			{addressString && <AddressText addressText={addressString} />}
+
+			<div className="share-gmaps-button-container">
+				<ShareButton />
+				{vendorData.gmapsLink && <MapsLink mapsLink={vendorData.gmapsLink} />}
+			</div>
+
 
 		</RootLayout>
 	)

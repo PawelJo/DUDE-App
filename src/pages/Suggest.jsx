@@ -77,6 +77,9 @@ export default function Suggest() {
 	}
 
 	const isCityValid = !errors.city
+	const isRatingValid = !errors.rating
+
+	console.log(isCityValid)
 
 	return (
 		<Rootlayout >
@@ -147,6 +150,7 @@ export default function Suggest() {
 				<RatingGroup
 					control={control}
 					name="rating"
+					rules={{ required: "Rating is required" }}
 					options={[
 						{ value: '1', label: '1' },
 						{ value: '2', label: '2' },
@@ -157,7 +161,9 @@ export default function Suggest() {
 					]}
 				/>
 
-
+				{isRatingValid ? null : (
+					<p className="error-message">{errors.rating?.message}</p>
+				)}
 
 
 

@@ -38,7 +38,11 @@ const VendorList = ({ data, loading, error }) => {
 
 	return (
 		<>
-			{formattedRuleText}
+			{formattedRuleText.map((item) => (
+				<div className="rule-text" key={item}>
+					{item}
+				</div>
+			))}
 			<CityList vendors={berlinVendors} city='Berlin' />
 			<CityList vendors={viennaVendors} city='Wien' />
 

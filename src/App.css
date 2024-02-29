@@ -93,6 +93,12 @@ video {
   vertical-align: baseline;
 }
 
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+
 /* HTML5 display-role reset for older browsers */
 article,
 aside,
@@ -241,7 +247,7 @@ main {
   font-size: 15px;
   width: 100%;
   padding-top: 10px;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
 }
 
 .rules-container {
@@ -485,10 +491,11 @@ main {
   font-size: 20px;
   color: #ffffff;
   font-family: "Roboto Mono";
+  box-sizing: border-box;
 }
 
 .search-input {
-  width: 100%;
+
   margin-top: 15px;
   margin-bottom: 15px;
   padding: 5px;
@@ -722,14 +729,16 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   padding: 5px;
   border-radius: 5px;
   border: 1px solid #ffffff;
   font-size: 20px;
-  width: 100%;
+  width: 48%;
   background-color: #000000;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .gmaps-link {
@@ -742,16 +751,23 @@ body {
   border-radius: 5px;
   border: 1px solid #ffffff;
   font-size: 20px;
-  width: 100%;
+  width: 48%;
   background-color: #000000;
   cursor: pointer;
+  box-sizing: border-box;
+}
+
+.share-gmaps-button-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .submit-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 10px;
+
   padding: 5px;
   border-radius: 5px;
   border: 1px solid #ffffff;
@@ -759,4 +775,5 @@ body {
   width: 100%;
   background-color: #000000;
   cursor: pointer;
+  box-sizing: border-box;
 }

@@ -1,6 +1,6 @@
 import RadioSelectRating from './RadioSelectRating';
 
-export default function RatingGroup({ control, name, options }) {
+export default function RatingGroup({ control, name, options, rules }) {
 	return (
 		<>
 
@@ -13,6 +13,7 @@ export default function RatingGroup({ control, name, options }) {
 						control={control}
 						value={option.value}
 						label={option.label}
+						rules={rules}
 					/>
 				))}
 			</div>

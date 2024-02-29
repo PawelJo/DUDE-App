@@ -5,6 +5,6 @@ export default function MapsLink(mapsLink) {
 	const { mapsLink: formattedMapsLink } = mapsLink;
 
 	return (
-		<a href={formattedMapsLink} className="gmaps-link">-- [OPEN IN GOOGLE MAPs] --</a>
+		<a href={formattedMapsLink} className="gmaps-link">[GOOGLE MAPS]</a>
 	)
 }

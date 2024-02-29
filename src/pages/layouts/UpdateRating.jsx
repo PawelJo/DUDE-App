@@ -77,6 +77,8 @@ export default function UpdateRating({ vendorData, setRatingCompleted }) {
 
 	}
 
+	const isRatingValid = !errors.rating
+
 	return (
 		<>
 
@@ -89,6 +91,7 @@ export default function UpdateRating({ vendorData, setRatingCompleted }) {
 						<RatingGroup
 							control={control}
 							name="rating"
+							rules={{ required: 'Give a rating' }}
 							options={[
 								{ value: '1', label: '1' },
 								{ value: '2', label: '2' },
@@ -98,12 +101,14 @@ export default function UpdateRating({ vendorData, setRatingCompleted }) {
 
 							]}
 						/>
-						<button className='submit-button' type="submit" >-- [ SEND ] --</button>
+						{isRatingValid ? null : (
+							<p className="error-message">{errors.rating?.message}</p>
+						)}
+						<button className='submit-button' type="submit" >-- [ SEND RATING ] --</button>
 					</form>
 				)
 
 			}
-
 			{submitMessage && <p className='submit-message'>{submitMessage}</p>}
 
 		</>

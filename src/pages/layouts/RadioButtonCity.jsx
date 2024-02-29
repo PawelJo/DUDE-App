@@ -1,11 +1,12 @@
 import { useController } from 'react-hook-form';
-export default function RadioButtonCity({ control, name, value, label }) {
+export default function RadioButtonCity({ control, name, value, label, rules }) {
 	const {
 		field: { onChange, onBlur, value: selectedValue },
 	} = useController({
 		name,
 		control,
 		defaultValue: '',
+		rules
 	});
 
 	return (
