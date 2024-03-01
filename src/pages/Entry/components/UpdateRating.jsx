@@ -8,9 +8,7 @@ export default function UpdateRating({ vendorData, setRatingCompleted }) {
 
 
 	const {
-		register,
 		handleSubmit,
-		watch,
 		formState: { errors },
 		control,
 		reset

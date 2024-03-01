@@ -8,10 +8,10 @@ import RatingGroup from '../../components/RatingGroup.jsx'
 
 export default function Suggest() {
 
+	let userRatings = localStorage.getItem('userRatings') ? JSON.parse(localStorage.getItem('userRatings')) : []
+
 	const {
-		register,
 		handleSubmit,
-		watch,
 		formState: { errors },
 		control,
 		reset
@@ -42,6 +42,8 @@ export default function Suggest() {
 		}
 		console.log("formattedData: ", formattedData)
 
+
+
 		const mainUrl = window.location.host.includes('localhost')
 			?
 			'http://localhost:8080'
@@ -71,6 +73,9 @@ export default function Suggest() {
 		setLoading(false);
 
 		setTimeout(() => {
+			userRatings.push(data.id)
+
+			localStorage.setItem('userRatings', JSON.stringify(userRatings))
 			setSubmitMessage('');
 		}, 3000);
 
